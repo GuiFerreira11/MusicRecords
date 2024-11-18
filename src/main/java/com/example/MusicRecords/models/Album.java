@@ -1,19 +1,44 @@
 package com.example.MusicRecords.models;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "albuns")
 public class Album {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
   private String nome;
   private int numeroDeMusicas;
   private LocalDate dataLancamento;
+  @ManyToOne
+  @JoinColumn(name = "artista_id")
   private Artista artista;
-  private List<Musica> musicas;
+  @OneToMany(mappedBy = "album", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  private List<Musica> musicas = new ArrayList<>();
 
-  public Album(String nome, int numeroDeMusicas, LocalDate dataLancamento) {
+  public Album() {
+  }
+
+  public Album(String nome, int numeroDeMusicas, String dataLancamento) {
     this.nome = nome;
     this.numeroDeMusicas = numeroDeMusicas;
-    this.dataLancamento = dataLancamento;
+    this.dataLancamento = LocalDate.parse(dataLancamento, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
   }
 
   @Override
@@ -45,8 +70,14 @@ public class Album {
   public void setArtista(Artista artista) {
     this.artista = artista;
   }
-   public void setMusica(List<Musica> musicas){
+
+  public void setListMusica(List<Musica> musicas) {
     musicas.forEach(m -> m.setAlbum(this));
     this.musicas = musicas;
+  }
+
+  public void setMusica(Musica musica) {
+    musica.setAlbum(this);
+    this.musicas.add(musica);
   }
 }

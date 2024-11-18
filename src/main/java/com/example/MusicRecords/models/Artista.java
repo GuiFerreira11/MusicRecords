@@ -1,13 +1,38 @@
 package com.example.MusicRecords.models;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "artistas")
 public class Artista {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
   private String nome;
+  @Enumerated(EnumType.STRING)
   private TipoArtista tipoArtista;
+  @Enumerated(EnumType.STRING)
   private Genero genero;
-  private List<Album> albuns;
+  @OneToMany(mappedBy = "artista", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  private List<Album> albuns = new ArrayList<>();
+  private String descricao;
+
+  public Artista() {
+  }
 
   public Artista(String nome, String tipoArtista, String genero) {
     this.nome = nome;
@@ -37,9 +62,22 @@ public class Artista {
     return albuns;
   }
 
-  public void setAlbuns(List<Album> albuns) {
+  public String getDescricao(){
+    return this.descricao;
+  }
+
+  public void setListAlbum(List<Album> albuns) {
     albuns.forEach(a -> a.setArtista(this));
     this.albuns = albuns;
+  }
+
+  public void setAlbum(Album album) {
+    album.setArtista(this);
+    this.albuns.add(album);
+  }
+
+  public void setDescricao(String descricao){
+    this.descricao = descricao;
   }
 
 }
