@@ -40,9 +40,16 @@ public class Artista {
     this.genero = Genero.classificacao(genero);
   }
 
+  public Artista(DadosArtista dadosArtista) {
+    this.nome = dadosArtista.nome();
+    this.tipoArtista = TipoArtista.classificacao(dadosArtista.tipoArtista());
+    this.genero = Genero.classificacao(dadosArtista.genero());
+    this.descricao = dadosArtista.descricao();
+  }
+
   @Override
   public String toString() {
-    return "Artista: " + this.nome + " - " + this.tipoArtista + " - Genero: " + this.genero + "\n Albuns:"
+    return "Artista: " + this.nome + " - " + this.tipoArtista + " - Genero: " + this.genero + "\nAlbuns:\n"
         + albuns.stream().map(Album::toString).collect(Collectors.joining("\n"));
   }
 
@@ -62,22 +69,13 @@ public class Artista {
     return albuns;
   }
 
-  public String getDescricao(){
+  public String getDescricao() {
     return this.descricao;
   }
 
-  public void setListAlbum(List<Album> albuns) {
+  public void setAlbum(List<Album> albuns) {
     albuns.forEach(a -> a.setArtista(this));
     this.albuns = albuns;
-  }
-
-  public void setAlbum(Album album) {
-    album.setArtista(this);
-    this.albuns.add(album);
-  }
-
-  public void setDescricao(String descricao){
-    this.descricao = descricao;
   }
 
 }

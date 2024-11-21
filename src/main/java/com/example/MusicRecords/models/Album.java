@@ -1,7 +1,6 @@
 package com.example.MusicRecords.models;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +23,7 @@ public class Album {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
   private String nome;
-  private int numeroDeMusicas;
-  private LocalDate dataLancamento;
+  private Year anoLancamento;
   @ManyToOne
   @JoinColumn(name = "artista_id")
   private Artista artista;
@@ -35,28 +33,22 @@ public class Album {
   public Album() {
   }
 
-  public Album(String nome, int numeroDeMusicas, String dataLancamento) {
+  public Album(String nome, String dataLancamento) {
     this.nome = nome;
-    this.numeroDeMusicas = numeroDeMusicas;
-    this.dataLancamento = LocalDate.parse(dataLancamento, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    this.anoLancamento = Year.parse(dataLancamento);
   }
 
   @Override
   public String toString() {
-    return "Album: " + this.nome + " - Número de músicas: " + this.numeroDeMusicas + " - Data de Laçamento:"
-        + this.dataLancamento;
+    return "Album: " + this.nome + " - Ano de Laçamento:" + this.anoLancamento;
   }
 
   public String getNome() {
     return nome;
   }
 
-  public int getNumeroDeMusicas() {
-    return numeroDeMusicas;
-  }
-
-  public LocalDate getDataLancamento() {
-    return dataLancamento;
+  public Year getAnoLancamento() {
+    return anoLancamento;
   }
 
   public Artista getArtista() {

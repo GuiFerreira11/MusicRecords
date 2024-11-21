@@ -16,7 +16,6 @@ public class Musica {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
   private String nome;
-  private int duracaoEmSegundos;
   @ManyToOne
   @JoinColumn(name = "album_id")
   private Album album;
@@ -24,22 +23,17 @@ public class Musica {
   public Musica() {
   }
 
-  public Musica(String nome, int duracaoEmMinutos) {
+  public Musica(String nome) {
     this.nome = nome;
-    this.duracaoEmSegundos = duracaoEmMinutos;
   }
 
   @Override
   public String toString() {
-    return "Música: " + this.nome + " - Duração em minutos: " + duracaoEmSegundos;
+    return "Música: " + this.nome;
   }
 
   public String getNome() {
     return nome;
-  }
-
-  public int getDuracaoEmSegundos() {
-    return duracaoEmSegundos;
   }
 
   public Album getAlbum() {

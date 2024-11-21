@@ -2,13 +2,14 @@ package com.example.MusicRecords.models;
 
 public enum Genero {
   ROCK("rock"),
+  RAP("rap"),
   POP("pop"),
   FUNK("fun"),
   SERTANEJO("sertanejo"),
   MPB("mpb"),
   SAMBA("samba"),
   PAGODE("pagode"),
-  FORRO("forró");
+  FORRO("forro");
 
   private String genero;
 
