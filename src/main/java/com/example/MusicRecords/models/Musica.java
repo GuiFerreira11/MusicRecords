@@ -29,7 +29,7 @@ public class Musica {
 
   @Override
   public String toString() {
-    return "Música: " + this.nome;
+    return "Música: " + this.nome + " - Álbum: " + this.album.getNome();
   }
 
   public String getNome() {

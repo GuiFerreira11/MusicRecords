@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -29,6 +30,7 @@ public class Artista {
   private Genero genero;
   @OneToMany(mappedBy = "artista", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   private List<Album> albuns = new ArrayList<>();
+  @Column(columnDefinition = "text")
   private String descricao;
 
   public Artista() {
@@ -49,8 +51,8 @@ public class Artista {
 
   @Override
   public String toString() {
-    return "Artista: " + this.nome + " - " + this.tipoArtista + " - Genero: " + this.genero + "\nAlbuns:\n"
-        + albuns.stream().map(Album::toString).collect(Collectors.joining("\n"));
+    return "Artista: " + this.nome + " - " + this.tipoArtista + " - Genero: " + this.genero + "\nDescrição: "
+        + this.descricao + "\nÁlbuns:\n" + albuns.stream().map(Album::toString).collect(Collectors.joining("\n"));
   }
 
   public String getNome() {

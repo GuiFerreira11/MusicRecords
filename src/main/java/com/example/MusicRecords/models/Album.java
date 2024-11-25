@@ -40,7 +40,7 @@ public class Album {
 
   @Override
   public String toString() {
-    return "Album: " + this.nome + " - Ano de Laçamento:" + this.anoLancamento;
+    return "Álbum: " + this.nome + " - Ano de Laçamento:" + this.anoLancamento;
   }
 
   public String getNome() {

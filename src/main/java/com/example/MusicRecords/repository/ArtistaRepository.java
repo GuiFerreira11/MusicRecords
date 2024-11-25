@@ -15,10 +15,19 @@ public interface ArtistaRepository extends JpaRepository<Artista, Long> {
   @Query("SELECT a FROM Artista a WHERE a.nome ILIKE %:nomeArtista%")
   Optional<Artista> buscarArtista(String nomeArtista);
 
-  @Query("SELECT d FROM Artista a JOIN a.albuns d WHERE a = :artistaSelecionado AND d.nome ILIKE %:nomeAlbum%")
-  Optional<Album> buscarAlbum(Artista artistaSelecionado, String nomeAlbum);
+  @Query("SELECT b FROM Artista a JOIN a.albuns b WHERE a = :artistaSelecionado")
+  List<Album> listarAlbuns(Artista artistaSelecionado);
 
-  @Query("SELECT m FROM Artista a JOIN a.albuns d JOIN d.musicas m")
+  @Query("SELECT b FROM Artista a JOIN a.albuns b WHERE a = :artistaSelecionado AND b.nome ILIKE%:nomeAlbum%")
+  Album buscarAlbum(Artista artistaSelecionado, String nomeAlbum);
+
+  @Query("Select a FROM Artista a")
+  List<Artista> listarTodosArtistas();
+
+  @Query("SELECT m FROM Artista a JOIN a.albuns b JOIN b.musicas m ")
   List<Musica> listarTodasAsMusicas();
+
+  @Query("SELECT m FROM Artista a JOIN a.albuns b JOIN b.musicas m WHERE a = :artistaSelecionado")
+  List<Musica> listarMusicasPorArtista(Artista artistaSelecionado);
 
 }
